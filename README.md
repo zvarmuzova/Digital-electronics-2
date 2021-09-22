@@ -35,7 +35,16 @@ x | y
 2 | 8
 
 ## Listing of C source code
-```
-  TO DO: ENTER C CODE HERE
+```c
+  // Infinite loop
+    while (1)
+    {
+        // Pause several milliseconds
+        _delay_ms(SHORT_DELAY);
+
+        // Invert LED in Data Register
+        // PORTB = PORTB xor 0010 0000
+        PORTB = PORTB ^ (1<<LED_GREEN);
+    }
 ```
 
