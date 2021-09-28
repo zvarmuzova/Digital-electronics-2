@@ -22,7 +22,7 @@ Link to your `Digital-electronics-2` GitHub repository:
 | 0 | 0 | 0 | 0 | 0 | 1 |
 | 0 | 1 | 1 | 0 | 1 | 1 |
 | 1 | 0 | 1 | 0 | 1 | 0 |
-| 1 | 1 | 1 | 0 | 0 | 0 |
+| 1 | 1 | 1 | 1 | 0 | 0 |
 
 
 ### Morse code
@@ -71,4 +71,4 @@ int main(void)
 
 2. Scheme of Morse code application, i.e. connection of AVR device, LED, resistor, and supply voltage. The image can be drawn on a computer or by hand. Always name all components and their values!
 
-   ![schema](schema.png)
+   ![schema](schema2.png)
