@@ -50,10 +50,10 @@ int main(void)
         // Pause several milliseconds
         _delay_ms(BLINK_DELAY);
 
-        if(bit_is_clear(PIND, 3))
+        if(GPIO_read(&PIND, 3))
         {
-	        PORTB = PORTB ^ (1<<LED_GREEN);
-	        PORTC = PORTC ^ (1<<LED_RED);
+			GPIO_toggle(&PORTB, LED_GREEN);
+			GPIO_toggle(&PORTC, LED_RED);
 	        
 	        // Pause several milliseconds
 	        _delay_ms(BLINK_DELAY);
