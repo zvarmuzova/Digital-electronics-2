@@ -34,7 +34,7 @@ int main(void)
 	//					    abcdefgDP   abcdefgDP	-> 3 na pozici 0
     // SEG_update_shift_regs(0b00001101, 0b00010000);
 	// SEG_update_shift_regs(0b10011111, 0b01000000);		// 1 na 2. pozici
-	SEG_update_shift_regs(8, 3);		// use of look-up table
+	// SEG_update_shift_regs(8, 3);		// use of look-up table
 	
 
     // Configure 16-bit Timer/Counter1 for Decimal counter
@@ -42,7 +42,7 @@ int main(void)
 	TIM1_overflow_262ms();
 	TIM1_overflow_interrupt_enable();
 	
-	// Configure 8-bit Timer/Counter0
+	// Configure 8-bit Timer/Counter0 - for switching displays
 	TIM0_overflow_4ms();
 	TIM0_overflow_interrupt_enable();
 
@@ -68,17 +68,18 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    // WRITE YOUR CODE HERE
 	cnt0++;
 	if (cnt0 > 9)
 	{
 		cnt0 = 0;
 		cnt1++;
-		if (cnt1 >5)
+		if (cnt1 > 5)
+		{
 			cnt1 = 0;
+		}
 	}
 		
-	SEG_update_shift_regs(cnt0, 0);
+	// SEG_update_shift_regs(cnt0, 0);
 
 }
 
@@ -90,11 +91,11 @@ ISR(TIMER0_OVF_vect)
 	if (pos > 1)
 	{
 		pos = 0;
-		SEG_update_shift_regs(cnt0, cnt1);		// ??? to do!
+		SEG_update_shift_regs(cnt0, 0);		// activate first display "ones"
 	}
 	else
 	{
-		SEG_update_shift_regs(cnt0, cnt1);		// ??? to do!
+		SEG_update_shift_regs(cnt1, 1);		// activate second display "tens"
 	}
 }
 
