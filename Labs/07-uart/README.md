@@ -42,33 +42,33 @@ ISR(ADC_vect)
     lcd_gotoxy(8, 0);
     lcd_puts(lcd_string);
 	
-	itoa(value, lcd_string, 16);  // Convert hexadecimal value to string
-	
-	lcd_gotoxy(13, 0);		// show hexadecimal value on 'b' position
-	lcd_puts("    ");
-	lcd_gotoxy(13, 0);
-	lcd_puts(lcd_string);
+    itoa(value, lcd_string, 16);  // Convert hexadecimal value to string
+    
+    lcd_gotoxy(13, 0);		// show hexadecimal value on 'b' position
+    lcd_puts("    ");
+    lcd_gotoxy(13, 0);
+    lcd_puts(lcd_string);
 
-	// define the key pressed
-	uint8_t key = 0;
-	if(value > 1000) 
-		key = 0;		// none, (over 1000) - measured 1023
-	else if(value > 600)
-		key = 1;		// select, (600 to 1000) - measured 639
-	else if(value > 380)
-		key = 2;		// left, (380 to 600) - measured 410
-	else if(value > 200)
-		key = 3;		// down, (200 to 400) - measured 257
-	else if(value > 50)
-		key = 4;		// up, (50 to 200) - measured 99
-	else
-		key = 5;		// right, (under 50) - measured 0
-	
-	lcd_gotoxy(8, 1);		// show button string value on 'c' position
-	lcd_puts("    ");
-	lcd_gotoxy(8, 1);
-	lcd_puts(key_name[key]);
-	uart_puts(key_name[key]);
+    // define the key pressed
+    uint8_t key = 0;
+    if(value > 1000) 
+        key = 0;		// none, (over 1000) - measured 1023
+    else if(value > 600)
+        key = 1;		// select, (600 to 1000) - measured 639
+    else if(value > 380)
+        key = 2;		// left, (380 to 600) - measured 410
+    else if(value > 200)
+        key = 3;		// down, (200 to 400) - measured 257
+    else if(value > 50)
+        key = 4;		// up, (50 to 200) - measured 99
+    else
+        key = 5;		// right, (under 50) - measured 0
+    
+    lcd_gotoxy(8, 1);		// show button string value on 'c' position
+    lcd_puts("    ");
+    lcd_gotoxy(8, 1);
+    lcd_puts(key_name[key]);
+    uart_puts(key_name[key]);
 }
 ```
 
@@ -82,7 +82,7 @@ ISR(ADC_vect)
 
 2. Flowchart figure for function `uint8_t get_parity(uint8_t data, uint8_t type)` which calculates a parity bit of input 8-bit `data` according to parameter `type`. The image can be drawn on a computer or by hand. Use clear descriptions of the individual steps of the algorithms.
 
-   ![flowchart](images/flowchart.jpg)
+   ![flowchart](images/flowchart.png)
 
 
 ### Temperature meter
