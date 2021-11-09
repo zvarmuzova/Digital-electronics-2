@@ -48,10 +48,10 @@
    | :-: | :-: | :-: | :-: |
    | Right  | 0&nbsp;V | 0   | 0 |
    | Up     | 0.495&nbsp;V | 101 | 99 |
-   | Down   | 1,202&nbsp;V |     | 257 |
-   | Left   | 1,970&nbsp;V |     | 410 |
-   | Select | 3,182&nbsp;V |     | 639 |
-   | none   |       |     | 1023 |
+   | Down   | 1,202&nbsp;V | 246 | 257 |
+   | Left   | 1,970&nbsp;V | 403 | 410 |
+   | Select | 3,182&nbsp;V | 651 | 639 |
+   | none   | 5&nbsp;V | 1023 | 1023 |
 
 
       | **Operation** | **Register(s)** | **Bit(s)** | **Description** |

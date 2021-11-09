@@ -22,6 +22,10 @@
 # define F_CPU 16000000     // frequency in Hz
 #endif
 
+/* Constants ---------------------------------------------------------*/
+// array of strings 
+const char *key_name[6] = {"NONE", "SELECT", "LEFT", "DOWN", "UP", "RIGHT"};
+	
 /* Function definitions ----------------------------------------------*/
 /**********************************************************************
  * Function: Main function where the program execution begins
@@ -98,21 +102,42 @@ ISR(ADC_vect)
 {
     uint16_t value = 0;
     char lcd_string[4] = "0000";
-	// char lcd_string_hex[3] = "000"
 
     value = ADC;                  // Copy ADC result to 16-bit variable
     itoa(value, lcd_string, 10);  // Convert decimal value to string
 
-	// convert decimal to hexadecimal
-	// to do!
-	// itoa(value, lcd_string_hex, 16);  // Convert hexadecimal value to string
-	
-    // WRITE YOUR CODE HERE
-    lcd_gotoxy(8, 0);
+    lcd_gotoxy(8, 0);		// show decimal value on 'a' position
     lcd_puts("    ");
     lcd_gotoxy(8, 0);
     lcd_puts(lcd_string);
-	 
-	 
+	
+	itoa(value, lcd_string, 16);  // Convert hexadecimal value to string
+	
+	lcd_gotoxy(13, 0);		// show hexadecimal value on 'b' position
+	lcd_puts("    ");
+	lcd_gotoxy(13, 0);
+	lcd_puts(lcd_string);
+	
+	// define the key pressed
+	uint8_t key = 0;
+	if(value > 1000) 
+		key = 0;		// none, (over 1000) - measured 1023
+	else if(value > 600)
+		key = 1;		// select, (600 to 1000) - measured 639
+	else if(value > 380)
+		key = 2;		// left, (380 to 600) - measured 410
+	else if(value > 200)
+		key = 3;		// down, (200 to 400) - measured 257
+	else if(value > 50)
+		key = 4;		// up, (50 to 200) - measured 99
+	else
+		key = 5;		// right, (under 50) - measured 0
+	
+	lcd_gotoxy(8, 1);		// show button string value on 'c' position
+	lcd_puts("    ");
+	lcd_gotoxy(8, 1);
+	lcd_puts(key_name[key]);
+	uart_puts(key_name[key]);
+	
 }
 
