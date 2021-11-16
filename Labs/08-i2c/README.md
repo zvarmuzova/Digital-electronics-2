@@ -7,14 +7,14 @@ Link to this file in your GitHub repository:
 ### Arduino Uno pinout
 
 1. In the picture of the Arduino Uno board, mark the pins that can be used for the following functions:
-   * PWM generators from Timer0, Timer1, Timer2
-   * analog channels for ADC
-   * UART pins
-   * I2C pins
-   * SPI pins
-   * external interrupt pins INT0, INT1
+   * PWM generators from Timer0, Timer1, Timer2 - PB3, PB2, PB1, PD6, PD5, PD3
+   * analog channels for ADC - PC5, PC4, PC3, PC2, PC1, PC0
+   * UART pins - PD4, PD1, PD0
+   * I2C pins - PC5, PC4
+   * SPI pins - PB5, PB4, PB3, PB2
+   * external interrupt pins INT0, INT1 - PD3, PD2
 
-   ![your figure](Images/arduino_uno_pinout.png)
+   ![arduino uno pinout](images/arduino_uno_pinout.png)
 
 ### I2C
 
@@ -41,6 +41,11 @@ ISR(TIMER1_OVF_vect)
         addr++;
         // If slave address is between 8 and 119 then move to SEND state
 
+        if(addr<120)        // always higher than 7 (we set it at start to 7)
+        {
+            state = STATE_SEND;
+        }
+        else addr = 7;
         break;
     
     // Transmit I2C slave address and get result
@@ -56,13 +61,26 @@ ISR(TIMER1_OVF_vect)
         twi_stop();
         /* Test result from I2C bus. If it is 0 then move to ACK state, 
          * otherwise move to IDLE */
+        switch(result)
+        {
+            case(0):
+                state = STATE_ACK;
+                break;
+            default:
+                state = STATE_IDLE;
+        }
 
         break;
 
     // A module connected to the bus was found
     case STATE_ACK:
         // Send info about active I2C slave to UART and move to IDLE
-
+        uart_puts("Addr: ");
+        itoa(addr, uart_string, 16);
+        uart_puts(uart_string);
+        uart_puts("\r\n");
+        
+        state = STATE_IDLE;
         break;
 
     // If something unexpected happens then move to IDLE
@@ -75,7 +93,7 @@ ISR(TIMER1_OVF_vect)
 
 2. (Hand-drawn) picture of I2C signals when reading checksum (only 1 byte) from DHT12 sensor. Indicate which specific moments control the data line master and which slave.
 
-   ![your figure]()
+   ![I2C signals](I2C_signals.jpg)
 
 ### Meteo station
 
@@ -83,4 +101,4 @@ Consider an application for temperature and humidity measurement and display. Us
 
 1. FSM state diagram picture of meteo station. The image can be drawn on a computer or by hand. Concise name of individual states and describe the transitions between them.
 
-   ![your figure]()
+   ![state diagram](images/state_diagram.png)
